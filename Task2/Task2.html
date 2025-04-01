@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005f73;
+        }
+        .todo-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .todo-item {
+            background: #e4e4e4;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .image-gallery img {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Form</h1>
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="formMessage"></p>
+    </div>
+    
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a task">
+        <button onclick="addTask()">Add</button>
+        <div class="todo-list" id="todoList"></div>
+    </div>
+
+    <div class="container">
+        <h1>Image Gallery</h1>
+        <input type="text" id="imageUrl" placeholder="Enter Image URL">
+        <button onclick="addImage()">Add Image</button>
+        <div class="image-gallery" id="imageGallery"></div>
+    </div>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let message = "";
+            if (name === "" || email === "") {
+                message = "Please fill out all fields.";
+            } else if (!email.includes("@")) {
+                message = "Please enter a valid email address.";
+            } else {
+                message = "Form submitted successfully!";
+            }
+            document.getElementById("formMessage").innerText = message;
+        });
+
+        function addTask() {
+            let taskInput = document.getElementById("taskInput").value;
+            if (taskInput.trim() === "") return;
+            let taskDiv = document.createElement("div");
+            taskDiv.className = "todo-item";
+            taskDiv.innerHTML = `${taskInput} <button onclick="removeTask(this)">X</button>`;
+            document.getElementById("todoList").appendChild(taskDiv);
+            document.getElementById("taskInput").value = "";
+        }
+        function removeTask(element) {
+            element.parentElement.remove();
+        }
+
+        function addImage() {
+            let imageUrl = document.getElementById("imageUrl").value;
+            if (imageUrl.trim() === "") return;
+            let img = document.createElement("img");
+            img.src = imageUrl;
+            document.getElementById("imageGallery").appendChild(img);
+            document.getElementById("imageUrl").value = "";
+        }
+    </script>
+</body>
+</html>
